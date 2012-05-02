@@ -99,7 +99,8 @@ class ModuleNews4wardArchiveMenu extends News4ward
 		{
 			$arr[] = array(
 				'item' => $objItems->item,
-				'href' => $this->generateFrontendUrl($objJumpTo->row(),'/archive/'.$objItems->item)
+				'href' => $this->generateFrontendUrl($objJumpTo->row(),'/archive/'.$objItems->item),
+				'active' => ($this->Input->get('archive') == $objItems->item)
 			);
 		}
 

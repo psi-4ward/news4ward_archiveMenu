@@ -56,12 +56,27 @@ class ModuleNews4wardArchiveMenu extends News4ward
 	 */
 	protected function compile()
     {
-		$years = $this->Database->prepare('SELECT DISTINCT(YEAR(FROM_UNIXTIME(start))) AS jahr FROM tl_news4ward_article WHERE pid IN (?) ORDER BY jahr DESC')
-					->execute(implode(',',$this->news_archives));
-
-		if(!$years->numRows)
+		switch($this->news4ward_archivemenu_type)
 		{
-			$this->Template->years = array();
+			case 'year':
+				$objItems = $this->Database->prepare('SELECT DISTINCT(YEAR(FROM_UNIXTIME(start))) AS item FROM tl_news4ward_article WHERE pid IN (?) ORDER BY item DESC')
+								 ->execute(implode(',',$this->news_archives));
+				break;
+
+			case 'month':
+				$objItems = $this->Database->prepare('SELECT DISTINCT(CONCAT(YEAR(FROM_UNIXTIME(start)),"-",MONTH(FROM_UNIXTIME(start)))) AS item FROM tl_news4ward_article WHERE pid IN (?) ORDER BY item DESC')
+								 ->execute(implode(',',$this->news_archives));
+				break;
+
+			default:
+				return;
+				break;
+		}
+
+
+		if(!$objItems->numRows)
+		{
+			$this->Template->items = array();
 			return;
 		}
 
@@ -80,15 +95,15 @@ class ModuleNews4wardArchiveMenu extends News4ward
 		}
 
 		$arr = array();
-		while($years->next())
+		while($objItems->next())
 		{
 			$arr[] = array(
-				'year' => $years->jahr,
-				'href' => $this->generateFrontendUrl($objJumpTo->row(),'/year/'.$years->jahr)
+				'item' => $objItems->item,
+				'href' => $this->generateFrontendUrl($objJumpTo->row(),'/archive/'.$objItems->item)
 			);
 		}
 
-		$this->Template->years = $arr;
+		$this->Template->items = $arr;
 	}
 
 }

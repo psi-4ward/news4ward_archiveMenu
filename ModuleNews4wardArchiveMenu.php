@@ -6,7 +6,7 @@
  *
  * @author Christoph Wiechert <wio@psitrax.de>
  * @copyright 4ward.media GbR <http://www.4wardmedia.de>
- * @package news4ward_tags
+ * @package news4ward_archiveMenu
  * @filesource
  * @licence LGPL
  */

@@ -102,6 +102,22 @@ class ModuleNews4wardArchiveMenu extends News4ward
 				'href' => $this->generateFrontendUrl($objJumpTo->row(),'/archive/'.$objItems->item),
 				'active' => ($this->Input->get('archive') == $objItems->item)
 			);
+
+			// set active item for the active filter hinting
+			if($this->Input->get('archive') == $objItems->item)
+			{
+				if(!isset($GLOBALS['news4ward_filter_hint']))
+				{
+					$GLOBALS['news4ward_filter_hint'] = array();
+				}
+
+				$GLOBALS['news4ward_filter_hint']['archive'] = array
+				(
+					'hint' 			=> $this->news4ward_filterHint,
+					'value'			=> $objItems->item
+				);
+
+			}
 		}
 
 		$this->Template->items = $arr;

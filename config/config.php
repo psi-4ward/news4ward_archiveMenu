@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -18,7 +18,7 @@
  */
  
 // FE-Modules
-$GLOBALS['FE_MOD']['news4ward']['news4wardArchiveMenu'] = 'ModuleNews4wardArchiveMenu';
+$GLOBALS['FE_MOD']['news4ward']['news4wardArchiveMenu'] = '\News4ward\Module\ArchiveMenu';
 
 // News4wardList Filter HOOK
-$GLOBALS['TL_HOOKS']['News4wardListFilter'][] = array('News4wardArchiveMenuHelper','archiveFilter');
+$GLOBALS['TL_HOOKS']['News4wardListFilter'][] = array('\News4ward\ArchiveMenuHelper','archiveFilter');

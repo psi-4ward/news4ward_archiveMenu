@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -11,7 +11,10 @@
  * @licence LGPL
  */
 
-class News4wardArchiveMenuHelper extends System
+
+namespace Psi\News4ward;
+
+class ArchiveMenuHelper extends \System
 {
 
 	/**
@@ -41,4 +44,3 @@ class News4wardArchiveMenuHelper extends System
 	}
 }
 
-?>

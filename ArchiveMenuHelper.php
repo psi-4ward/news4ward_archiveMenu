@@ -37,7 +37,7 @@ class ArchiveMenuHelper extends \System
 			list($year,$month) = explode('-',$this->Input->get('archive'));
 			$year = mysql_real_escape_string($year);
 			$month = mysql_real_escape_string($month);
-			return 'YEAR(FROM_UNIXTIME(start)) = "'.$year.'" AND MONTH(FROM_UNIXTIME(start)) = "'.$month.'"';
+			return 'YEAR(FROM_UNIXTIME(tl_news4ward_article.start)) = "'.$year.'" AND MONTH(FROM_UNIXTIME(tl_news4ward_article.start)) = "'.$month.'"';
 		}
 
 		return;

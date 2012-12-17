@@ -25,5 +25,5 @@ ClassLoader::addClasses(array
 // Register the templates
 TemplateLoader::addFiles(array
 (
-	'mod_news4ward_archiveMenu' 				=> 'system/modules/news4ward_archiveMenu/templates',
+	'mod_news4ward_archivemenu' 				=> 'system/modules/news4ward_archiveMenu/templates',
 ));

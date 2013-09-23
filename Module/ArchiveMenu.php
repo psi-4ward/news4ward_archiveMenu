@@ -61,11 +61,11 @@ class ArchiveMenu extends \News4ward\Module\Module
 		switch($this->news4ward_archivemenu_type)
 		{
 			case 'year':
-				$objItems = $this->Database->execute('SELECT DISTINCT(YEAR(FROM_UNIXTIME(start))) AS item FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') ORDER BY item DESC');
+				$objItems = $this->Database->execute('SELECT YEAR(FROM_UNIXTIME(start)) AS item, count(id) AS quantity FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') GROUP BY item ORDER BY item DESC');
 				break;
 
 			case 'month':
-				$objItems = $this->Database->execute('SELECT DISTINCT(CONCAT(YEAR(FROM_UNIXTIME(start)),"-",MONTH(FROM_UNIXTIME(start)))) AS item FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') ORDER BY item DESC');
+				$objItems = $this->Database->execute('SELECT CONCAT(YEAR(FROM_UNIXTIME(start)),"-",MONTH(FROM_UNIXTIME(start))) AS item, count(id) AS quantity FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') GROUP BY item ORDER BY item DESC');
 				break;
 
 			default:
@@ -97,28 +97,10 @@ class ArchiveMenu extends \News4ward\Module\Module
 		$arr = array();
 		while($objItems->next())
 		{
-			if($this->news4ward_showQuantity)
-		        {
-			    switch($this->news4ward_archivemenu_type)
-		        {
-			    case 'year':
-				$objCount = $this->Database->prepare('SELECT COUNT(*) AS quantity FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') AND YEAR(FROM_UNIXTIME(start))=?')->execute($objItems->item);
-				break;
-
-			    case 'month':
-				$objCount = $this->Database->prepare('SELECT COUNT(*) AS quantity FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') AND CONCAT(YEAR(FROM_UNIXTIME(start)),"-",MONTH(FROM_UNIXTIME(start)))=?')->execute($objItems->item);
-				break;
-
-			    default:
-				return;
-				break;
-		        }
-			}
-			
 			$arr[] = array(
 				'item' => $objItems->item,
 				'href' => $this->generateFrontendUrl($objJumpTo->row(),'/archive/'.$objItems->item),
-				'quantity' => $objCount->quantity,
+				'quantity' => ($this->news4ward_showQuantity) ? $objItems->quantity : '',
 				'active' => ($this->Input->get('archive') == $objItems->item)
 			);
 

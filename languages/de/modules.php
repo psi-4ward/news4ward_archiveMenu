@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * News4ward
@@ -14,4 +14,3 @@
 // FE-Modules
 $GLOBALS['TL_LANG']['FMD']['news4wardArchiveMenu']    = array('Archiv-Filter', 'Fügt einen Archiv-Filter hinzu.');
 
-?>

@@ -61,13 +61,23 @@ class ArchiveMenu extends \News4ward\Module\Module
 		switch($this->news4ward_archivemenu_type)
 		{
 			case 'year':
-				$objItems = $this->Database->execute('SELECT YEAR(FROM_UNIXTIME(start)) AS item, count(id) AS quantity FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') GROUP BY item ORDER BY item DESC');
+				$objItems = $this->Database->execute('
+					SELECT YEAR(FROM_UNIXTIME(start)) AS item, count(id) AS quantity
+					FROM tl_news4ward_article
+					WHERE status = "published" AND ((start = "" || start < UNIX_TIMESTAMP()) && (stop = "" OR stop > UNIX_TIMESTAMP())) AND pid IN ('.implode(',', $this->news_archives).')
+					GROUP BY item
+					ORDER BY item DESC');
 				break;
 
 			case 'month':
-				$objItems = $this->Database->execute('SELECT CONCAT(YEAR(FROM_UNIXTIME(start)),"-",MONTH(FROM_UNIXTIME(start))) AS item, count(id) AS quantity FROM tl_news4ward_article WHERE pid IN ('.implode(',',$this->news_archives).') GROUP BY item ORDER BY item DESC');
+				$objItems = $this->Database->execute('
+				SELECT DATE_FORMAT(FROM_UNIXTIME(start), "%Y-%m") AS item, count(id) AS quantity
+				FROM tl_news4ward_article
+				WHERE status = "published" AND ((start = "" || start < UNIX_TIMESTAMP()) && (stop = "" OR stop > UNIX_TIMESTAMP())) AND pid IN ('.implode(',',$this->news_archives).')
+				GROUP BY item
+				ORDER BY item DESC');
 				break;
-
+			
 			default:
 				return;
 				break;

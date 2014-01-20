@@ -13,7 +13,7 @@
 
 namespace Psi\News4ward\Module;
 
-class ArchiveMenu extends \News4ward\Module\Module
+class ArchiveMenu extends Module
 {
     /**
    	 * Template

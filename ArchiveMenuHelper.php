@@ -28,16 +28,21 @@ class ArchiveMenuHelper extends \System
 		if(preg_match("~^\d{4}$~",$this->Input->get('archive')))
 		{
 			// filter for year
-			$year = mysql_real_escape_string($this->Input->get('archive'));
-			return 'YEAR(FROM_UNIXTIME(start)) = "'.$year.'"';
+			$year = $this->Input->get('archive');
+			return array
+			(
+				'where'     => 'YEAR(FROM_UNIXTIME(start)) = ?',
+				'values'    => array($year)
 		}
 		elseif(preg_match("~^\d{4}-\d{1,2}$~",$this->Input->get('archive')))
 		{
 			// filter for year and month
 			list($year,$month) = explode('-',$this->Input->get('archive'));
-			$year = mysql_real_escape_string($year);
-			$month = mysql_real_escape_string($month);
-			return 'YEAR(FROM_UNIXTIME(tl_news4ward_article.start)) = "'.$year.'" AND MONTH(FROM_UNIXTIME(tl_news4ward_article.start)) = "'.$month.'"';
+			return array
+			(
+				'where'     => 'YEAR(FROM_UNIXTIME(tl_news4ward_article.start)) = ? AND MONTH(FROM_UNIXTIME(tl_news4ward_article.start)) = ?',
+				'values'    => array($year, $month)
+			);
 		}
 
 		return;

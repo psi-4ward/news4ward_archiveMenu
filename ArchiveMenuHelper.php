@@ -33,6 +33,7 @@ class ArchiveMenuHelper extends \System
 			(
 				'where'     => 'YEAR(FROM_UNIXTIME(start)) = ?',
 				'values'    => array($year)
+			);
 		}
 		elseif(preg_match("~^\d{4}-\d{1,2}$~",$this->Input->get('archive')))
 		{

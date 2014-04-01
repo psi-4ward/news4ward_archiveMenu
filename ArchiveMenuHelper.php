@@ -31,7 +31,7 @@ class ArchiveMenuHelper extends \System
 			$year = $this->Input->get('archive');
 			return array
 			(
-				'where'     => 'YEAR(FROM_UNIXTIME(start)) = ?',
+				'where'     => 'YEAR(FROM_UNIXTIME(tl_news4ward_article.start)) = ?',
 				'values'    => array($year)
 			);
 		}

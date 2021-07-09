@@ -104,7 +104,9 @@ class ArchiveMenu extends Module
 			$objJumpTo = $GLOBALS['objPage'];
 		}
 
-		$arr = array();
+        $this->Template->resetHref = $this->generateFrontendUrl($objJumpTo->row());
+
+        $arr = array();
 		while($objItems->next())
 		{
 			$arr[] = array(
